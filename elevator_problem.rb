@@ -1,28 +1,58 @@
-class Building
+$floors = 2
+$rows   = 2
 
-		attr_reader :max_floors :max_row
-		
-		def initialize( max_floors, max_row)
-			@max_floors = max_floors
-			@max_row    = max_row
-		end
-
-		def elevator
-			my_elevator = Elevator.new( max_floors, max_row )
-		end
+class Elevator # View
+	def starting_position
+		puts "Your on Floor: #{$floors - 1} Row:#{$rows - 2}"
+	end
+	
 end
- =begin
-	It occurred to me that a elevator would only exist on a structure
-	so having the elevator as a function of the building made sense to me.
-	While been atempting to write this way I know this isn't good programming
-	because everything get jumbled together and there to many dependecies.
-	The approach you should me about initiating the two objects into another class
-	has gotten me stuck. I dont know how you can pass objects into another object. or 
-	manipulate the parameters once inside the object( or if that's a good approach).
-=end	
-class Elevator
-	def initialize( max_floors, max_row )
-		@max_floors = max_floors
-		@max_row    = max_row
+
+class Building # Model		
+	def to_s
+		puts " This building has #{$floors} and #{$rows}"
 	end
 end
+
+class Builder # Controller
+	attr_accessor :building, :elevator
+	
+	def initialize(b_obj, e_obj) 
+		@buiding  = b_obj
+		@elevator = e_obj
+	end
+# C.R.U.D - create, read, update and delete
+      #Create
+	def initiate_building
+		b_obj = Building.new 
+		puts "#{b_obj.to_s}"
+	end
+	
+	def install_elevator
+		e_obj = Elevator.new
+		puts ("#{e_obj.starting_position}")
+	end
+	
+	def shift_elevator ( floor,row )
+		@floor = floor
+		@row   = row
+		if (floor <= $floor.to_f) 
+			puts ( "You are now on Floor: #{@floor}" )
+		end
+		if (row <= $rows)
+			puts ( "You are now on row #{@row}")
+		end
+	end
+	
+	  #Read
+	
+	
+end
+=begin
+a = Building.new
+b = Elevator.new
+p = Builder.new(a,b)
+puts ("#{p.initiate_building}"  )
+puts ("#{p.install_elevator}"   )
+puts ("#{p.shift_elevator(2,2)}")
+=end
